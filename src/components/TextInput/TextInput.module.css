@@ -1,0 +1,42 @@
+.input {
+  outline: none;
+  border: none;
+  border-radius: 12px;
+  width: 90%;
+  margin-top: 5px;
+  padding: 11px 18px;
+  font-weight: 500;
+  font-size: 1rem;
+  color: #000;
+  background-color: whitesmoke;
+  transition: all 0.25s ease;
+}
+
+.input:focus {
+  border: 1px solid #2f80ed;
+}
+
+.valid_value {
+  border: 1px solid green;
+}
+
+.invalid_value {
+  border: 1px solid red;
+}
+
+.invalid_value:focus {
+  border: 1px solid red;
+}
+
+.valid_value:focus {
+  border: 1px solid green;
+}
+
+.message {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 14px;
+
+  color: red;
+}

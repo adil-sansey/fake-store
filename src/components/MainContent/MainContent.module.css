@@ -1,0 +1,7 @@
+.main_content {
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  max-width: 1440px;
+}

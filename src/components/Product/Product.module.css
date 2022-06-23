@@ -1,0 +1,142 @@
+.container {
+  padding: 15px;
+  display: flex;
+}
+
+.left_column {
+  width: 65%;
+}
+
+.right_column {
+  width: 35%;
+  text-align: left;
+  padding: 0 15px;
+}
+
+.left_column img {
+  width: 100%;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.left_column img.active {
+  opacity: 1;
+}
+
+.product_description {
+  border-bottom: 1px solid #e1e8ee;
+  margin-bottom: 20px;
+}
+
+.product_description span {
+  display: block;
+  margin-bottom: 20px;
+  font-size: 12px;
+  color: #358ed7;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.product_description h1 {
+  margin-bottom: 20px;
+  font-weight: 300;
+  font-size: 52px;
+  color: #43484d;
+  letter-spacing: -2px;
+}
+
+.product_description p {
+  margin-bottom: 20px;
+  font-size: 16px;
+  font-weight: 300;
+  color: #86939e;
+  line-height: 24px;
+}
+
+/* Product Price */
+.product_price {
+  display: flex;
+  align-items: center;
+}
+
+.product_price span {
+  font-size: 26px;
+  font-weight: 300;
+  color: #43474d;
+  margin-right: 20px;
+}
+
+.cart_btn {
+  cursor: pointer;
+  display: inline-block;
+  background-color: #7dc855;
+  border-radius: 6px;
+  font-size: 16px;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 12px 30px;
+  transition: all 0.5s;
+  margin-right: 20px;
+}
+
+.cart_btn:hover {
+  background-color: #64af3d;
+}
+
+input[type='number'] {
+  width: 100px;
+  cursor: pointer;
+  background-color: #7dc855;
+  border-radius: 6px;
+  font-size: 16px;
+  color: #ffffff;
+  transition: all 0.5s;
+
+  vertical-align: top;
+  outline: none;
+  padding: 0;
+  height: 46px;
+  line-height: 47px;
+  text-indent: 10px;
+}
+
+input[type='number'] :hover {
+  background-color: #64af3d;
+}
+
+input[type='number']:focus {
+  outline: 2px solid blue;
+}
+
+/* Responsive */
+@media (max-width: 940px) {
+  .container {
+    flex-direction: column;
+    margin-top: 60px;
+  }
+
+  .left_column,
+  .right_column {
+    width: 100%;
+  }
+
+  .left_column img {
+    width: 300px;
+    right: 0;
+    top: -65px;
+    left: initial;
+  }
+}
+
+@media (max-width: 535px) {
+  .left_column img {
+    width: 220px;
+    top: -85px;
+  }
+}
+
+.message {
+  font-family: 'Oswald', sans-serif;
+  color: #43484d;
+}

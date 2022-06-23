@@ -1,0 +1,72 @@
+.header {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1440px;
+  height: 62px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 25px;
+  background: #262626;
+  border-radius: 50px;
+  margin-bottom: 15px;
+
+  font-weight: 300;
+  font-size: 16px;
+  color: #43484d;
+  letter-spacing: 2px;
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  color: #333333;
+}
+
+.container {
+  display: flex;
+}
+
+.nav_bar {
+  display: flex;
+}
+
+.logo {
+  color: #fff;
+  font-family: 'Fascinate', cursive;
+  font-size: 32px;
+  line-height: 32px;
+  margin-right: 15px;
+}
+
+.nav_bar_link {
+  margin-right: 10px;
+  display: block;
+  font-weight: 400;
+
+  font-size: 24px;
+  line-height: 24px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #fff;
+  align-self: center;
+
+  border-bottom: 1px solid #fff;
+}
+
+.nav_bar.nav_bar_link + .nav_bar_link {
+  margin-right: 15px;
+}
+
+.auth_box {
+  cursor: pointer;
+  font-weight: 400;
+
+  font-size: 24px;
+  line-height: 24px;
+  color: #fff;
+}
+
+.basket {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 16px;
+  color: #fff;
+}
