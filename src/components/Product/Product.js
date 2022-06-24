@@ -16,20 +16,24 @@ function Product(props) {
   const addToBasket = () => {
     props.setBasket({
       amount: props.basket.amount + +productAmout,
-      totalPrice: props.basket.totalPrice + +price,
+      totalPrice: props.basket.totalPrice + +price * +productAmout,
     });
   };
 
   useEffect(() => {
     fetch(`https://api.escuelajs.co/api/v1/products/${productId}`)
       .then((response) => {
-        if (response.ok) {
-          return response.json();
+        if (!response.ok) {
+          return new Error(`${response.status}: ${response.statusText}`);
         }
+
+        return response.json();
       })
       .then((data) => {
-        console.log('Product = ');
-        console.log(data);
+        if (data instanceof Error) {
+          return data;
+        }
+
         setProduct(data);
       })
       .catch((error) => console.log(error));

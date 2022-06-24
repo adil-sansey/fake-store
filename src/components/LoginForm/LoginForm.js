@@ -29,19 +29,6 @@ function LoginForm(props) {
                     : 'Невалидный адрес электронной почты'
                 }
               />
-              {/* <label className={styles.label} htmlFor="email">
-                Email:
-              </label>
-              <input
-                onChange={props.onChangeHandler}
-                className={
-                  props.user.isValidData
-                    ? styles.password
-                    : `${styles.password} ${styles.invalid_data}`
-                }
-                type="email"
-                id="email"
-              /> */}
               <TextInput
                 type="password"
                 value={props.user.password.value}
@@ -55,17 +42,6 @@ function LoginForm(props) {
                     : 'Пароль должен быть длиной не менее 8 символов'
                 }
               />
-              {/* <label className={styles.label} htmlFor="password">
-                Пароль:
-              </label>
-              <input
-                onChange={props.onChangeHandler}
-                className={
-                  props.user.isValidData ? styles.email : `${styles.email} ${styles.invalid_data}`
-                }
-                type="password"
-                id="password"
-              /> */}
 
               <div className={styles.modalActions}>
                 <div className={styles.actionsContainer}>

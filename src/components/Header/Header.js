@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 function Header(props) {
   return (
-    <div className={styles.header}>
+    <header className={styles.header}>
       <div className={styles.container}>
         <div className={styles.logo}>Fake-store</div>
         <nav className={styles.nav_bar}>
@@ -16,10 +16,13 @@ function Header(props) {
           </Link>
         </nav>
       </div>
-      {props.user && (
-        <div
-          className={styles.basket}
-        >{`В корзине ${props.basket.amount} товаров на сумму ${props.basket.totalPrice}$`}</div>
+      {props.isUserLoged && (
+        <>
+          <div className={styles.basket}>
+            {`В корзине ${props.basket.amount} товаров на сумму ${props.basket.totalPrice}$`}
+          </div>
+          <div className={styles.user_greeting}>{`Здравствуйте, ${props.user.name}`}</div>
+        </>
       )}
       <div
         onClick={props.isUserLoged ? props.logOut : props.openOrCloseAuthModal}
@@ -27,7 +30,7 @@ function Header(props) {
       >
         {props.isUserLoged ? 'Выйти' : 'Войти'}
       </div>
-    </div>
+    </header>
   );
 }
 

@@ -6,17 +6,13 @@ import { useState, useEffect } from 'react';
 const AuthModal = (props) => {
   const [isShowAuthorizeForm, setIsShowAuthorizeForm] = useState(false);
 
+  //TODO change user state back to default!!!
   const [user, setUser] = useState({
-    email: { value: '', isValid: null },
-    password: { value: '', isValid: null },
+    email: { value: 'john@mail.com', isValid: true },
+    password: { value: 'changeme', isValid: true },
   });
 
   const [isWrongEmailOrPass, setIsWrongEmailOrPass] = useState(null);
-  // {
-  //   email: 'jhayklaus17@gmail.com',
-  //   password: 'ahjgahhkjka',
-  //   isValidData: true,
-  // }
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -82,10 +78,6 @@ const AuthModal = (props) => {
     }
 
     setUser({ ...user, [id]: { value, isValid } });
-
-    setTimeout(() => {
-      console.log(user);
-    });
   };
 
   const authorize = (e) => {
@@ -105,15 +97,18 @@ const AuthModal = (props) => {
       body: JSON.stringify({ email: user.email.value }),
     })
       .then((response) => {
+        if (!response.ok) {
+          return new Error(`${response.status}: ${response.statusText}`);
+        }
+
         return response.json();
       })
       .then((data) => {
-        console.log(data);
-
         if (!data.isAvailable) {
           setUser({ ...user, email: { ...user.email, isValid: false } });
           setIsWrongEmailOrPass('Адрес электронной почты уже зарегестрирован!');
-          return;
+
+          return data;
         }
 
         return fetch('https://api.escuelajs.co/api/v1/users/', {
@@ -128,7 +123,10 @@ const AuthModal = (props) => {
           }),
         });
       })
-      .then()
+      .then((response) => {
+        // looks like the api no longer allows to create new users
+        // TODO
+      })
       .catch((error) => {
         console.log(error);
       });
@@ -158,18 +156,22 @@ const AuthModal = (props) => {
     })
       .then((response) => {
         if (!response.ok) {
-          setUser({ ...user, email: { isValid: false }, password: { isValid: false } });
+          console.log(response);
+          setUser({
+            email: { ...user.email, isValid: false },
+            password: { ...user.password, isValid: false },
+          });
           setIsWrongEmailOrPass('Неверный email или пароль!');
-          return;
+
+          return new Error(`${response.status}: ${response.statusText}`);
         }
+
         return response.json();
       })
       .then((data) => {
-        console.log(data.access_token);
-
         if (!data.access_token) {
-          setUser({ ...user, isValidData: false });
-          return;
+          console.log(data);
+          return data;
         }
 
         return fetch('https://api.escuelajs.co/api/v1/auth/profile', {
@@ -180,10 +182,19 @@ const AuthModal = (props) => {
         });
       })
       .then((response) => {
+        if (!response.ok) {
+          console.log(response);
+          return response;
+        }
+
         return response.json();
       })
       .then((data) => {
-        console.log(data);
+        if (data instanceof Error) {
+          console.log(data);
+          return data;
+        }
+
         props.setUserData(data);
         props.setIsUserLoged(true);
 
