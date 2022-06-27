@@ -2,12 +2,15 @@ import React from 'react';
 import LoginForm from '../LoginForm/LoginForm';
 import AuthorizeForm from '../AuthorizeForm/AuthorizeForm';
 import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { logInUser } from '../../store/actions';
 
 const AuthModal = (props) => {
+  const dispatch = useDispatch();
   const [isShowAuthorizeForm, setIsShowAuthorizeForm] = useState(false);
 
-  //TODO change user state back to default!!!
-  const [user, setUser] = useState({
+  //TODO change user state back to default!!! user
+  const [authFormData, setAuthFormData] = useState({
     email: { value: 'john@mail.com', isValid: true },
     password: { value: 'changeme', isValid: true },
   });
@@ -25,7 +28,7 @@ const AuthModal = (props) => {
   const showAuthorizeForm = (e) => {
     e.preventDefault();
 
-    setUser({
+    setAuthFormData({
       name: { value: '', isValid: null },
       email: { value: '', isValid: null },
       password: { value: '', isValid: null },
@@ -67,7 +70,7 @@ const AuthModal = (props) => {
         break;
 
       case 'repeat_password':
-        if (value === '' || value !== user.password.value) {
+        if (value === '' || value !== authFormData.password.value) {
           isValid = false;
           break;
         }
@@ -77,14 +80,14 @@ const AuthModal = (props) => {
         break;
     }
 
-    setUser({ ...user, [id]: { value, isValid } });
+    setAuthFormData({ ...authFormData, [id]: { value, isValid } });
   };
 
   const authorize = (e) => {
     e.preventDefault();
 
-    for (let prop in user) {
-      if (!user[prop].isValid) {
+    for (let prop in authFormData) {
+      if (!authFormData[prop].isValid) {
         return;
       }
     }
@@ -94,7 +97,7 @@ const AuthModal = (props) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email: user.email.value }),
+      body: JSON.stringify({ email: authFormData.email.value }),
     })
       .then((response) => {
         if (!response.ok) {
@@ -105,25 +108,26 @@ const AuthModal = (props) => {
       })
       .then((data) => {
         if (!data.isAvailable) {
-          setUser({ ...user, email: { ...user.email, isValid: false } });
+          setAuthFormData({ ...authFormData, email: { ...authFormData.email, isValid: false } });
           setIsWrongEmailOrPass('Адрес электронной почты уже зарегестрирован!');
 
           return data;
         }
 
-        return fetch('https://api.escuelajs.co/api/v1/users/', {
+        return fetch('https://api.escuelajs.co/api/v1/users', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            name: user.name.value,
-            email: user.email.value,
-            password: user.password.value,
+            name: authFormData.name.value,
+            email: authFormData.email.value,
+            password: authFormData.password.value,
           }),
         });
       })
       .then((response) => {
+        console.log(response);
         // looks like the api no longer allows to create new users
         // TODO
       })
@@ -135,14 +139,14 @@ const AuthModal = (props) => {
   const login = (e) => {
     e.preventDefault();
 
-    if (!user.email.isValid) {
-      setUser({ ...user, email: { ...user.email, isValid: false } });
+    if (!authFormData.email.isValid) {
+      setAuthFormData({ ...authFormData, email: { ...authFormData.email, isValid: false } });
 
       return;
     }
 
-    if (!user.password.isValid) {
-      setUser({ ...user, password: { ...user.password, isValid: false } });
+    if (!authFormData.password.isValid) {
+      setAuthFormData({ ...authFormData, password: { ...authFormData.password, isValid: false } });
 
       return;
     }
@@ -152,14 +156,16 @@ const AuthModal = (props) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email: user.email.value, password: user.password.value }),
+      body: JSON.stringify({
+        email: authFormData.email.value,
+        password: authFormData.password.value,
+      }),
     })
       .then((response) => {
         if (!response.ok) {
-          console.log(response);
-          setUser({
-            email: { ...user.email, isValid: false },
-            password: { ...user.password, isValid: false },
+          setAuthFormData({
+            email: { ...authFormData.email, isValid: false },
+            password: { ...authFormData.password, isValid: false },
           });
           setIsWrongEmailOrPass('Неверный email или пароль!');
 
@@ -170,7 +176,6 @@ const AuthModal = (props) => {
       })
       .then((data) => {
         if (!data.access_token) {
-          console.log(data);
           return data;
         }
 
@@ -183,7 +188,6 @@ const AuthModal = (props) => {
       })
       .then((response) => {
         if (!response.ok) {
-          console.log(response);
           return response;
         }
 
@@ -191,13 +195,10 @@ const AuthModal = (props) => {
       })
       .then((data) => {
         if (data instanceof Error) {
-          console.log(data);
           return data;
         }
 
-        props.setUserData(data);
-        props.setIsUserLoged(true);
-
+        dispatch(logInUser(data));
         props.openOrCloseAuthModal(e);
       })
       .catch((error) => {
@@ -213,7 +214,7 @@ const AuthModal = (props) => {
         onChangeHandler={onChangeHandler}
         login={login}
         showAuthorizeForm={showAuthorizeForm}
-        user={user}
+        authFormData={authFormData}
       />
     );
   }
@@ -226,7 +227,7 @@ const AuthModal = (props) => {
       login={login}
       showAuthorizeForm={showAuthorizeForm}
       authorize={authorize}
-      user={user}
+      authFormData={authFormData}
     />
   );
 };

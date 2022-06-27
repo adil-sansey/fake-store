@@ -1,0 +1,9 @@
+export const SET = 'SET';
+export const LOG_IN = 'LOG_IN';
+export const LOG_OUT = 'LOG_OUT';
+export const ADD = 'ADD';
+export const REMOVE = 'REMOVE';
+export const SET_AMOUNT = 'SET_AMOUNT';
+export const INCREASE = 'INCREASE';
+export const DECREASE = 'DECREASE';
+export const CLEAR = 'CLEAR';

@@ -1,4 +1,6 @@
 .container {
+  max-width: 1440px;
+  margin: 0 auto;
   padding: 15px;
   display: flex;
 }
@@ -14,6 +16,8 @@
 }
 
 .left_column img {
+  background-position: center;
+  background-size: cover;
   width: 100%;
   opacity: 0;
   transition: all 0.3s ease;
@@ -113,27 +117,15 @@ input[type='number']:focus {
 @media (max-width: 940px) {
   .container {
     flex-direction: column;
-    margin-top: 60px;
   }
 
   .left_column,
   .right_column {
     width: 100%;
   }
-
-  .left_column img {
-    width: 300px;
-    right: 0;
-    top: -65px;
-    left: initial;
-  }
 }
 
 @media (max-width: 535px) {
-  .left_column img {
-    width: 220px;
-    top: -85px;
-  }
 }
 
 .message {

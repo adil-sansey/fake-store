@@ -1,22 +1,20 @@
 import React from 'react';
 import styles from './MainContent.module.css';
-// import { products } from '../../mocks/products';
 import ProductCard from '../ProductCard/ProductCard';
+import { useSelector } from 'react-redux/es/exports';
+import { getProducts } from '../../store/selectors';
 
-function MainContent(props) {
-  if (!props.products) {
+function MainContent() {
+  const products = useSelector(getProducts);
+
+  if (!products.length) {
     return <h1>Loading ...</h1>;
   }
 
   return (
     <div className={styles.main_content}>
-      {props.products.map((elem, index) => (
-        <ProductCard
-          isUserLoged={props.isUserLoged}
-          addToBasket={props.addToBasket}
-          key={index}
-          product={elem}
-        />
+      {products.map((elem, index) => (
+        <ProductCard key={index} product={elem} />
       ))}
     </div>
   );

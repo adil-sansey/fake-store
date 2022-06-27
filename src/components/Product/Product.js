@@ -2,8 +2,14 @@ import React from 'react';
 import styles from './Product.module.css';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getIsUserLogged } from '../../store/selectors';
+import { addToBasket } from '../../store/actions';
 
-function Product(props) {
+function Product() {
+  const isUserLogged = useSelector(getIsUserLogged);
+  const dispatch = useDispatch();
+
   const [product, setProduct] = useState(null);
   const [productAmout, setProductAmout] = useState(1);
   const { productId } = useParams();
@@ -13,11 +19,8 @@ function Product(props) {
     setProductAmout(value);
   };
 
-  const addToBasket = () => {
-    props.setBasket({
-      amount: props.basket.amount + +productAmout,
-      totalPrice: props.basket.totalPrice + +price * +productAmout,
-    });
+  const onClick = () => {
+    dispatch(addToBasket(product, +productAmout));
   };
 
   useEffect(() => {
@@ -66,9 +69,9 @@ function Product(props) {
 
         <div className={styles.product_price}>
           <span>{price}$</span>
-          {props.isUserLoged ? (
+          {isUserLogged ? (
             <>
-              <button onClick={addToBasket} className={styles.cart_btn}>
+              <button onClick={onClick} className={styles.cart_btn}>
                 Добавить в корзину
               </button>
               <input onChange={changeHandler} type="number" step="1" min="1" value={productAmout} />

@@ -18,8 +18,8 @@ function LoginForm(props) {
             <form className={styles.auth_form}>
               <TextInput
                 type="email"
-                value={props.user.email.value}
-                isValid={props.user.email.isValid}
+                value={props.authFormData.email.value}
+                isValid={props.authFormData.email.isValid}
                 onChange={props.onChangeHandler}
                 id="email"
                 placeholder="Email"
@@ -31,8 +31,8 @@ function LoginForm(props) {
               />
               <TextInput
                 type="password"
-                value={props.user.password.value}
-                isValid={props.user.password.isValid}
+                value={props.authFormData.password.value}
+                isValid={props.authFormData.password.isValid}
                 onChange={props.onChangeHandler}
                 id="password"
                 placeholder="Password"

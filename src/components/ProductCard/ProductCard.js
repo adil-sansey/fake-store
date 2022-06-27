@@ -1,11 +1,24 @@
 import React from 'react';
 import styles from './ProductCard.module.css';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { getIsUserLogged } from '../../store/selectors';
+import { addToBasket } from '../../store/actions';
 
 function ProductCard(props) {
-  const { id, title, price, category, images } = props.product;
-  const [imageURL] = images;
-  const { name: categoryName } = category;
+  const {
+    id,
+    title,
+    price,
+    images: [imageURL],
+  } = props.product;
+
+  const isUserLogged = useSelector(getIsUserLogged);
+  const dispatch = useDispatch();
+
+  const clickHandler = () => {
+    dispatch(addToBasket(props.product, 1));
+  };
 
   return (
     <div className={styles.cardContainer}>
@@ -20,32 +33,16 @@ function ProductCard(props) {
             </Link>
           </div>
           <div className={styles.product_price}>{`${price}$`}</div>
-          {props.isUserLoged ? (
-            <button className={styles.btn} data-price={price} onClick={props.addToBasket}>
+          {isUserLogged ? (
+            <button className={styles.btn} data-price={price} onClick={clickHandler}>
               Добавить в корзину
             </button>
           ) : (
-            <div className={styles.message}>Чтобы добавить товар в корзину залогинтесь</div>
+            <div className={styles.message}>Чтобы добавить товар в корзину залогиньтесь</div>
           )}
         </div>
       </div>
     </div>
-
-    // <div classNameName={styles.product_card}>
-    //   <div classNameName={styles.category}>{categoryName}</div>
-    //   <img classNameName={styles.product_img} src={imageURL} alt={title} />
-    //   <Link to={`/products/${id}`} classNameName={styles.produce_title}>
-    //     {title}
-    //   </Link>
-    //   <div classNameName={styles.product_price}>{`$${price}`}</div>
-    //   {props.isUserLoged ? (
-    //     <button data-price={price} onClick={props.addToBasket}>
-    //       Добавить в корзину
-    //     </button>
-    //   ) : (
-    //     <div>Чтобы добавить товар в корзину залогинтесь</div>
-    //   )}
-    // </div>
   );
 }
 

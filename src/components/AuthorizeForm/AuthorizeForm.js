@@ -18,8 +18,8 @@ function AuthorizeForm(props) {
             <form className={styles.auth_form}>
               <TextInput
                 type="text"
-                value={props.user.name.value}
-                isValid={props.user.name.isValid}
+                value={props.authFormData.name.value}
+                isValid={props.authFormData.name.isValid}
                 onChange={props.onChangeHandler}
                 id="name"
                 placeholder="Имя"
@@ -31,8 +31,8 @@ function AuthorizeForm(props) {
               />
               <TextInput
                 type="email"
-                value={props.user.email.value}
-                isValid={props.user.email.isValid}
+                value={props.authFormData.email.value}
+                isValid={props.authFormData.email.isValid}
                 onChange={props.onChangeHandler}
                 id="email"
                 placeholder="Email"
@@ -44,8 +44,8 @@ function AuthorizeForm(props) {
               />
               <TextInput
                 type="password"
-                value={props.user.password.value}
-                isValid={props.user.password.isValid}
+                value={props.authFormData.password.value}
+                isValid={props.authFormData.password.isValid}
                 onChange={props.onChangeHandler}
                 id="password"
                 placeholder="Пароль"
@@ -57,8 +57,8 @@ function AuthorizeForm(props) {
               />
               <TextInput
                 type="password"
-                value={props.user.repeat_password.value}
-                isValid={props.user.repeat_password.isValid}
+                value={props.authFormData.repeat_password.value}
+                isValid={props.authFormData.repeat_password.isValid}
                 onChange={props.onChangeHandler}
                 id="repeat_password"
                 placeholder="Повторите пароль"
