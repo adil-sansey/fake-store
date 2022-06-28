@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './Product.module.css';
+import Loader from '../Loader/Loader';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -43,7 +44,7 @@ function Product() {
   }, [productId]);
 
   if (!product) {
-    return <h1>Loading ...</h1>;
+    return <Loader />;
   }
 
   const {

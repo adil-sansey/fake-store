@@ -11,8 +11,8 @@ const AuthModal = (props) => {
 
   //TODO change user state back to default!!! user
   const [authFormData, setAuthFormData] = useState({
-    email: { value: 'john@mail.com', isValid: true },
-    password: { value: 'changeme', isValid: true },
+    email: { value: '', isValid: null },
+    password: { value: '', isValid: null },
   });
 
   const [isWrongEmailOrPass, setIsWrongEmailOrPass] = useState(null);
@@ -34,6 +34,7 @@ const AuthModal = (props) => {
       password: { value: '', isValid: null },
       repeat_password: { value: '', isValid: null },
     });
+
     setIsShowAuthorizeForm(true);
   };
 
@@ -48,6 +49,7 @@ const AuthModal = (props) => {
           isValid = false;
           break;
         }
+
         const isFirstLetterCapitalized = value[0] === value[0].toUpperCase();
 
         if (!isFirstLetterCapitalized) {
@@ -58,21 +60,18 @@ const AuthModal = (props) => {
       case 'email':
         if (value === '') {
           isValid = false;
-          break;
         }
         break;
 
       case 'password':
         if (value === '' || value.length < 8) {
           isValid = false;
-          break;
         }
         break;
 
       case 'repeat_password':
         if (value === '' || value !== authFormData.password.value) {
           isValid = false;
-          break;
         }
         break;
 
@@ -199,6 +198,7 @@ const AuthModal = (props) => {
         }
 
         dispatch(logInUser(data));
+
         props.openOrCloseAuthModal(e);
       })
       .catch((error) => {

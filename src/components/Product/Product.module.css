@@ -125,9 +125,6 @@ input[type='number']:focus {
   }
 }
 
-@media (max-width: 535px) {
-}
-
 .message {
   font-family: 'Oswald', sans-serif;
   color: #43484d;

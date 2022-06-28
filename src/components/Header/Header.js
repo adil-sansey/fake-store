@@ -2,11 +2,11 @@ import React from 'react';
 import styles from './Header.module.css';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
-import { getUser } from '../../store/selectors';
+import { getIsUserLogged } from '../../store/selectors';
 import { logOutUser, clearBasket } from '../../store/actions';
 
 function Header(props) {
-  const user = useSelector(getUser);
+  const isUserLogged = useSelector(getIsUserLogged);
 
   const dispatch = useDispatch();
 
@@ -32,7 +32,7 @@ function Header(props) {
       </div>
 
       <div className={styles.container}>
-        {user.isUserLogged && (
+        {isUserLogged && (
           <Link to="/basket">
             <img
               className={styles.basket}
@@ -44,10 +44,10 @@ function Header(props) {
           </Link>
         )}
         <div
-          onClick={user.isUserLogged ? logOut : props.openOrCloseAuthModal}
+          onClick={isUserLogged ? logOut : props.openOrCloseAuthModal}
           className={styles.auth_box}
         >
-          {user.isUserLogged ? 'Выйти' : 'Войти'}
+          {isUserLogged ? 'Выйти' : 'Войти'}
         </div>
       </div>
     </header>
